@@ -7,6 +7,7 @@ import { Routes } from './src/routes';
 
 import { THEME } from './src/theme';
 import { Loading } from './src/components/Loading';
+import { TagUserEmailCreate } from './src/notifications/notificationTags';
 
 import { CartContextProvider } from './src/contexts/CartContext';
 
@@ -16,6 +17,8 @@ OneSignal.setEmail('arley.souto@hotmail.com')
 
 export default function App() {
   const [fontsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold });
+
+  TagUserEmailCreate('arley.souto@hotmail.com')
 
   return (
     <NativeBaseProvider theme={THEME}>
