@@ -11,6 +11,7 @@ import { Loading } from './src/components/Loading';
 import { TagUserEmailCreate } from './src/notifications/notificationTags';
 
 import { CartContextProvider } from './src/contexts/CartContext';
+import { useEffect } from 'react';
 
 
 OneSignal.setAppId('6af89438-1cb1-408f-b462-49e5e8ab2d82');
@@ -19,6 +20,14 @@ OneSignal.setEmail('arley.souto@hotmail.com')
 
 export default function App() {
   const [fontsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold });
+
+  useEffect(() =>{
+    const unsubscribe = OneSignal.setNotificationOpenedHandler(() =>{
+      console.log('Notificação aberta')
+    })
+
+    return() => unsubscribe
+  },[])
   
 
   TagUserEmailCreate('arley.souto@hotmail.com')
