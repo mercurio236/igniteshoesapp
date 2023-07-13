@@ -21,18 +21,23 @@ OneSignal.setEmail('arley.souto@hotmail.com')
 export default function App() {
   const [fontsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold });
 
-  useEffect(() =>{
-    const unsubscribe = OneSignal.setNotificationOpenedHandler(() =>{
-      console.log('Notificação aberta')
+  useEffect(() => {
+    const unsubscribe = OneSignal.setNotificationOpenedHandler((response) => {
+
+      const { actionId } = response.action as any
+
+      if (response.action) {
+        console.log(actionId === '1' ? 'Ver todas' : 'Ver pedido')
+      }
     })
 
-    return() => unsubscribe
-  },[])
-  
+    return () => unsubscribe
+  }, [])
+
 
   TagUserEmailCreate('arley.souto@hotmail.com')
 
-  
+
 
   return (
     <NativeBaseProvider theme={THEME}>
@@ -44,7 +49,7 @@ export default function App() {
       <CartContextProvider>
         {fontsLoaded ? <Routes /> : <Loading />}
       </CartContextProvider>
-      
+
     </NativeBaseProvider>
   );
 }
