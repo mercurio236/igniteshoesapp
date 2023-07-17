@@ -8,6 +8,20 @@ import { AppRoutes } from './app.routes';
 import OneSignal, { NotificationReceivedEvent, OSNotification } from 'react-native-onesignal';
 import { Notification } from '../components/Notification';
 
+const linking = {
+  prefixes: [' com.arleysouto.teste://', 'igniteshoesapp://', 'exp+igniteshoesapp://'],
+  config: {
+    screens: {
+      details: {
+        path: 'details/:productId',
+        parse: {
+          productId: (productId: string) => productId
+        }
+      }
+    }
+  }
+}
+
 export function Routes() {
   const { colors } = useTheme();
 
@@ -15,18 +29,18 @@ export function Routes() {
   theme.colors.background = colors.gray[700];
   const [notification, setNotification] = useState<OSNotification>()
 
-  useEffect(() =>{
-    const unsubscribe =  OneSignal.setNotificationWillShowInForegroundHandler((NotificationReceivedEvent:NotificationReceivedEvent) =>{
+  useEffect(() => {
+    const unsubscribe = OneSignal.setNotificationWillShowInForegroundHandler((NotificationReceivedEvent: NotificationReceivedEvent) => {
       const response = NotificationReceivedEvent.getNotification();
 
       setNotification(response)
     })
 
     return () => unsubscribe;
-  },[])
+  }, [])
 
   return (
-    <NavigationContainer theme={theme}>
+    <NavigationContainer theme={theme} linking={linking}>
       <AppRoutes />
       {
         notification?.title &&
