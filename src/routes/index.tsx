@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTheme } from 'native-base';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import * as Linking from 'expo-linking';
 
 
 
@@ -28,6 +29,7 @@ export function Routes() {
   const theme = DefaultTheme;
   theme.colors.background = colors.gray[700];
   const [notification, setNotification] = useState<OSNotification>()
+
 
   useEffect(() => {
     const unsubscribe = OneSignal.setNotificationWillShowInForegroundHandler((NotificationReceivedEvent: NotificationReceivedEvent) => {
